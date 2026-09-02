@@ -1,14 +1,22 @@
 [Unit]
 Description=WiFi Motion Correlator
 After=network-online.target
+Wants=network-online.target
 
 [Service]
 Type=simple
-User=pi
+DynamicUser=yes
+StateDirectory=wifi-motion-correlator
 WorkingDirectory=/opt/wifi-motion-correlator
 EnvironmentFile=-/etc/default/wifi-motion-correlator
+Environment=WMC_DB=/var/lib/wifi-motion-correlator/wmc.sqlite3
 ExecStart=/opt/wifi-motion-correlator/.venv/bin/python app/server.py
 Restart=on-failure
+RestartSec=3
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
 
 [Install]
 WantedBy=multi-user.target
