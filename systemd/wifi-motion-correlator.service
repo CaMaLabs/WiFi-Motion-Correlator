@@ -1,0 +1,14 @@
+[Unit]
+Description=WiFi Motion Correlator
+After=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/opt/wifi-motion-correlator
+EnvironmentFile=-/etc/default/wifi-motion-correlator
+ExecStart=/opt/wifi-motion-correlator/.venv/bin/python app/server.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
